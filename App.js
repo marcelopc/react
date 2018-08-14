@@ -22,6 +22,7 @@ export default createStackNavigator ({
             });
         }
     }
+
 },{
     navigationOptions: {
         title: 'Pessoas!',

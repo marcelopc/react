@@ -4,9 +4,9 @@ import { View, StyleSheet } from 'react-native';
 import PeopleListItem from './PeopleListItem'
 
 const PeopleList = props => {
-    const { peoples } = props;
+    const { peoples, onPressItem } = props;
     const items = peoples.map( people =>
-        <PeopleListItem key={ people.name.first } people={ people }/>
+        <PeopleListItem key={ people.name.first } people={ people } navigateToPeopleDetail={onPressItem}/>
     );
 
     return (
@@ -19,7 +19,7 @@ const PeopleList = props => {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#e2f9ff'
+        backgroundColor: '#e2f9ff',
     }
 });
 

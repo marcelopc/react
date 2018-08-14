@@ -1,39 +1,41 @@
-import React from 'react';
-import {Text, View } from 'react-native';
-import axios from 'axios';
+import { createStackNavigator  } from "react-navigation";
 
-import Header from './src/components/Header';
-import PeopleList from './src/components/PeopleList';
+import PeoplePage from "./src/pages/PeoplePage";
+import PeopleDetail from "./src/pages/PeopleDetailPage"
 
-export default class App extends React.Component {
-  constructor(props){
-    super(props);
+import { capitalizeFirstLetter } from './src/utils';
 
-    this.state = {
-      peoples: []
-    };
-
-  }
-
-  componentDidMount() {
-    axios
-    .get('https://randomuser.me/api/?nat=BR&results=5')
-    .then( response => {
-      const { results } = response.data;
-
-      this.setState({
-        peoples: results
-      });
-    });
-
-  }
-
-  render() {
-    return (
-      <View>
-        <Header title='Pessoas!' />
-        <PeopleList peoples={ this.state.peoples }/>
-      </View>
-    );
-  }
-}
+export default createStackNavigator ({
+    'Main': {
+        screen: PeoplePage
+    },
+    'PeopleDetail': {
+        screen: PeopleDetail,
+        navigationOptions: ({ navigation }) => {
+            const peopleName = capitalizeFirstLetter(navigation.state.params.people.name.first);
+            return ({
+                title: peopleName,
+                headerTitleStyle: {
+                    color: 'white',
+                    fontSize: 30
+                }
+            });
+        }
+    }
+},{
+    navigationOptions: {
+        title: 'Pessoas!',
+        headerTintColor:'white',
+        headerStyle: {
+            backgroundColor: '#6ca2f7',
+            borderBottomWidth: 1,
+            borderBottomColor: '#C5C5C5'
+        },
+        headerTitleStyle: {
+            color: 'white',
+            fontSize: 30,
+            textAlign: 'center',
+            flexGrow: 1,
+        }
+    }
+});

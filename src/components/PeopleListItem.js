@@ -1,22 +1,23 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 
 import { capitalizeFirstLetter } from '../utils'
 
 const PeopleListItem = props => {
-    const { people } = props;
+    const { people, navigateToPeopleDetail } = props;
     const { thumbnail } = people.picture;
     const { title, first, last } = people.name;
     return (
-        <View style={ styles.line }>
-            <Image style={ styles.avatar} source={{ uri: thumbnail }} />
-            <Text style={ styles.lineText }>
-                { `${capitalizeFirstLetter(title)} 
-                ${capitalizeFirstLetter(first)} 
-                ${capitalizeFirstLetter(last)}` 
-                }
-            </Text>
-        </View>
+        <TouchableOpacity onPress={ () =>{ 
+            navigateToPeopleDetail({ people });
+            }}>
+            <View style={ styles.line }>
+                <Image style={ styles.avatar} source={{ uri: thumbnail }} />
+                <Text style={ styles.lineText }>
+                    {`${capitalizeFirstLetter(title)} ${capitalizeFirstLetter(first)} ${capitalizeFirstLetter(last)}`}
+                </Text>
+            </View>
+        </TouchableOpacity>
     );
 };
 
@@ -32,11 +33,14 @@ const styles = StyleSheet.create({
     lineText:{
         fontSize: 20,
         paddingLeft: 15,
+        flex: 7
     },
 
     avatar:{
         aspectRatio: 1,
-        width: 200
+        flex: 1,
+        marginLeft: 15,
+        borderRadius: 50,
     }
 
 });
